@@ -3,15 +3,26 @@ import { fileURLToPath } from "node:url";
 import { toNodeHandler, fromNodeHeaders } from "better-auth/node";
 import { activeTickets } from "./state.js";
 import { sendToTelegramAPI } from "./telegram/api.js";
+import { createHash, timingSafeEqual } from "node:crypto";
 
-export function createHttpApp({ store, auth, runtime, baseURL }) {
+export function createHttpApp({
+  store,
+  auth,
+  runtime,
+  baseURL,
+  setupCode = "",
+  behindProxy = false,
+}) {
   const app = express();
   app.disable("x-powered-by");
+  if (behindProxy) app.set("trust proxy", 1);
   app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("X-Frame-Options", "DENY");
     res.setHeader("Referrer-Policy", "no-referrer");
+    if (baseURL.startsWith("https://"))
+      res.setHeader("Strict-Transport-Security", "max-age=31536000");
     res.setHeader(
       "Content-Security-Policy",
       "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'none'",
@@ -25,6 +36,7 @@ export function createHttpApp({ store, auth, runtime, baseURL }) {
   });
   const initialized = () =>
     !!store.db.prepare("SELECT id FROM user LIMIT 1").get();
+  app.get("/health", (_req, res) => res.json({ ok: true }));
   app.all(
     "/api/auth/*",
     (req, res, next) => {
@@ -39,14 +51,44 @@ export function createHttpApp({ store, auth, runtime, baseURL }) {
   );
   app.use(express.json({ limit: "16kb" }));
   app.get("/api/setup", (_req, res) =>
-    res.json({ initialized: initialized() }),
+    res.json({
+      initialized: initialized(),
+      setupAvailable: setupCode.length >= 32 && setupCode.length <= 256,
+    }),
   );
   let settingUp = false;
+  let attempts = 0;
+  let attemptsReset = Date.now() + 60000;
   app.post("/api/setup", async (req, res) => {
     if (settingUp || initialized())
       return res
         .status(409)
         .json({ error: "A conta de administração já foi criada." });
+    if (setupCode.length < 32 || setupCode.length > 256)
+      return res
+        .status(503)
+        .json({
+          error:
+            "Cadastro bloqueado. Configure SETUP_CODE no ambiente do servidor com pelo menos 32 caracteres.",
+        });
+    if (Date.now() >= attemptsReset) {
+      attempts = 0;
+      attemptsReset = Date.now() + 60000;
+    }
+    if (attempts >= 5)
+      return res
+        .status(429)
+        .json({ error: "Muitas tentativas de instalação. Aguarde um minuto." });
+    const supplied = req.body?.setupCode;
+    const hash = (value) => createHash("sha256").update(value).digest();
+    if (
+      typeof supplied !== "string" ||
+      supplied.length > 256 ||
+      !timingSafeEqual(hash(supplied), hash(setupCode))
+    ) {
+      attempts++;
+      return res.status(403).json({ error: "Código de instalação inválido." });
+    }
     const { name, email, password } = req.body;
     if (
       typeof name !== "string" ||

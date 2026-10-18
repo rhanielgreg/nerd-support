@@ -88,8 +88,25 @@
                   maxlength="128"
                   autocomplete="new-password"
                   required
-                  placeholder="Pelo menos 12 caracteres" /></label
-              ><button class="primary full" id="access-submit">
+                  placeholder="Pelo menos 12 caracteres"
+              /></label>
+              <label id="setup-code-label"
+                >Código de instalação
+                <input
+                  name="setupCode"
+                  type="password"
+                  autocomplete="off"
+                  minlength="32"
+                  maxlength="256"
+                  placeholder="Código definido em SETUP_CODE no servidor"
+                />
+                <small
+                  >Necessário somente para criar o primeiro
+                  administrador.</small
+                >
+              </label>
+              <p id="setup-notice" class="error-text" role="status" hidden></p>
+              <button class="primary full" id="access-submit">
                 Criar minha conta <span>↗</span></button
               ><small class="muted"
                 >Os dados ficam nesta instalação do Nerd Support.</small

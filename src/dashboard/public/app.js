@@ -1,5 +1,6 @@
 const $ = (selector) => document.querySelector(selector);
 let initialized = false;
+let setupAvailable = false;
 let current = null;
 let busy = false;
 let toastTimer;
@@ -37,6 +38,12 @@ function showAccess() {
   $("#logout").hidden = true;
   $("#name-label").hidden = initialized;
   $("#name-label input").required = !initialized;
+  $("#setup-code-label").hidden = initialized;
+  $("#setup-code-label input").required = !initialized && setupAvailable;
+  $("#setup-notice").hidden = initialized || setupAvailable;
+  $("#setup-notice").textContent =
+    "Cadastro bloqueado. Configure SETUP_CODE com pelo menos 32 caracteres nas variáveis do servidor e faça um novo deploy.";
+  $("#access-submit").disabled = !initialized && !setupAvailable;
   $("#access-title").textContent = initialized
     ? "Bom ter você de volta."
     : "Seu suporte, do seu jeito.";
@@ -274,7 +281,7 @@ document.querySelectorAll("[data-view]").forEach((button) =>
 );
 (async () => {
   try {
-    ({ initialized } = await api("/api/setup"));
+    ({ initialized, setupAvailable } = await api("/api/setup"));
     if (initialized) {
       try {
         await refresh(true);

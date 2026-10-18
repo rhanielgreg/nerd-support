@@ -1,10 +1,11 @@
+import { dataFile } from "./paths.js";
 import { activeTickets } from "../state.js";
 import fs from "node:fs";
 
 function saveActiveTickets() {
   try {
     fs.writeFileSync(
-      "active_tickets.json",
+      dataFile("active_tickets.json"),
       JSON.stringify(activeTickets, null, 2),
     );
     console.log(`Saved ${activeTickets.length} active tickets`);
@@ -16,8 +17,8 @@ function saveActiveTickets() {
 // Função para carregar tickets ativos
 function loadActiveTickets() {
   try {
-    if (fs.existsSync("active_tickets.json")) {
-      const data = fs.readFileSync("active_tickets.json", "utf8");
+    if (fs.existsSync(dataFile("active_tickets.json"))) {
+      const data = fs.readFileSync(dataFile("active_tickets.json"), "utf8");
       activeTickets.splice(0, activeTickets.length, ...JSON.parse(data));
       console.log(`Loaded ${activeTickets.length} active tickets`);
 

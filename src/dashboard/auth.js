@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { getMigrations } from "better-auth/db/migration";
 
-export async function createAuth(store, baseURL) {
+export async function createAuth(store, baseURL, { behindProxy = false } = {}) {
   const options = {
     appName: "Nerd Support",
     baseURL,
@@ -11,6 +11,11 @@ export async function createAuth(store, baseURL) {
     session: { expiresIn: 60 * 60 * 12 },
     rateLimit: { enabled: true, window: 60, max: 30 },
     trustedOrigins: [baseURL],
+    advanced: {
+      useSecureCookies: baseURL.startsWith("https://"),
+      trustedProxyHeaders: behindProxy,
+      defaultCookieAttributes: { httpOnly: true, sameSite: "lax" },
+    },
   };
   const { runMigrations } = await getMigrations(options);
   await runMigrations();

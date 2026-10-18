@@ -30,10 +30,14 @@ test("dashboard: instalação vazia, autenticação, proteção, configuração 
   const baseURL = "http://127.0.0.1:3000";
   const auth = await createAuth(store, baseURL);
   const runtime = createRuntime(store);
-  const server = createHttpApp({ store, auth, runtime, baseURL }).listen(
-    0,
-    "127.0.0.1",
-  );
+  const setupCode = "fictional-setup-code-for-tests-only-123456";
+  const server = createHttpApp({
+    store,
+    auth,
+    runtime,
+    baseURL,
+    setupCode,
+  }).listen(0, "127.0.0.1");
   await once(server, "listening");
   const address = `http://127.0.0.1:${server.address().port}`;
   let cookie = "";
@@ -57,6 +61,7 @@ test("dashboard: instalação vazia, autenticação, proteção, configuração 
   try {
     assert.deepEqual(await (await request("/api/setup")).json(), {
       initialized: false,
+      setupAvailable: true,
     });
     assert.equal((await request("/api/dashboard")).status, 401);
     assert.equal(
@@ -74,6 +79,7 @@ test("dashboard: instalação vazia, autenticação, proteção, configuração 
           name: "Teste",
           email: "test@example.com",
           password: "short",
+          setupCode,
         })
       ).status,
       400,
@@ -82,6 +88,7 @@ test("dashboard: instalação vazia, autenticação, proteção, configuração 
       name: "Administrador Teste",
       email: "test@example.com",
       password: "Password-only-for-test-123!",
+      setupCode,
     };
     assert.equal(
       (
@@ -92,6 +99,24 @@ test("dashboard: instalação vazia, autenticação, proteção, configuração 
           false,
           "https://invalid.example",
         )
+      ).status,
+      403,
+    );
+    assert.equal(
+      (
+        await request("/api/setup", "POST", {
+          ...account,
+          setupCode: undefined,
+        })
+      ).status,
+      403,
+    );
+    assert.equal(
+      (
+        await request("/api/setup", "POST", {
+          ...account,
+          setupCode: "invalid",
+        })
       ).status,
       403,
     );

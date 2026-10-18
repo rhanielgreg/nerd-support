@@ -6,9 +6,20 @@ import { randomBytes, createCipheriv, createDecipheriv } from "node:crypto";
 export function createStore(directory) {
   fs.mkdirSync(directory, { recursive: true, mode: 0o700 });
   const keyFile = path.join(directory, "server.key");
+  if (
+    !fs.existsSync(keyFile) &&
+    fs.existsSync(path.join(directory, "nerd-support.sqlite"))
+  )
+    throw new Error(
+      "O banco existente está sem server.key. Restaure a chave do backup; nenhuma chave nova foi criada.",
+    );
   if (!fs.existsSync(keyFile))
     fs.writeFileSync(keyFile, randomBytes(32), { mode: 0o600, flag: "wx" });
   const key = fs.readFileSync(keyFile);
+  if (key.length !== 32)
+    throw new Error(
+      "A chave server.key é inválida. Restaure uma cópia válida do backup.",
+    );
   const db = new DatabaseSync(path.join(directory, "nerd-support.sqlite"));
   db.exec(`PRAGMA journal_mode=WAL;
     CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL);

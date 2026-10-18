@@ -30,15 +30,15 @@ O dashboard autenticado local está implementado; a gestão de vários clientes 
 Requer Node.js 24.15 ou superior.
 
 1. Instale as dependências com `npm ci`.
-2. Execute `npm start`.
-3. Abra **http://127.0.0.1:3000**.
-4. Crie seu administrador com nome, e-mail e senha de pelo menos 12 caracteres.
+2. Antes do primeiro cadastro, configure `SETUP_CODE` no `.env` com um valor aleatório de pelo menos 32 caracteres.
+3. Execute `npm start` e abra **http://127.0.0.1:3000**.
+4. Crie o administrador com nome, e-mail, senha e código de instalação.
 5. Entre no painel, preencha identidade, tokens e IDs, e salve.
 6. Clique em **Validar integrações** e depois **Conectar bots**.
 
-A instalação inicia sem conta, sem tokens e com os bots desconectados. Não é necessário preencher o `.env` para testar. O painel usa as configurações cadastradas nele; tokens antigos do `.env` não iniciam os bots automaticamente.
+Sem `SETUP_CODE`, o cadastro inicial fica bloqueado. Contas existentes continuam acessíveis sem o código de instalação. Os tokens dos bots são cadastrados pelo dashboard e não precisam ficar no `.env`.
 
-O dashboard desta versão atende **um cliente e um administrador por instalação**, apenas no computador local. Após reiniciar o servidor, entre no painel e conecte os bots novamente. Para editar credenciais enquanto os bots estão ligados, primeiro clique em **Parar atendimento**. Tokens vazios no formulário mantêm as credenciais salvas.
+A versão atende **um cliente e um administrador por instalação**, localmente ou em servidor com armazenamento persistente. Após reiniciar, conecte os bots pelo painel. Pare os bots antes de alterar as configurações; tokens vazios no formulário mantêm as credenciais existentes.
 
 `npm run dev` reinicia ao editar o código; gravações de tickets e configurações não reiniciam a aplicação.
 
@@ -57,11 +57,15 @@ O painel também permite enviar uma mensagem de teste ao ID numérico de um usu�
 
 Contas, sessões, auditoria e configurações ficam em `data/nerd-support.sqlite`. As configurações são criptografadas com AES-256-GCM e a chave é gerada em `data/server.key`. Os tokens não são retornados ao navegador. Faça backup do banco **junto com a chave** e proteja o acesso à pasta. Perder a chave impede recuperar as credenciais salvas.
 
-`data/` é ignorado pelo Git. Tickets e idiomas continuam nos JSONs locais existentes. Não há isolamento de vários clientes nesta versão.
+`data/` é ignorado pelo Git. Tickets e idiomas também ficam nesse diretório, em `active_tickets.json` e `user_languages.json`. Na primeira inicialização da nova versão, JSONs legados na raiz são copiados para o diretório de dados, sem substituir arquivos existentes ou apagar os originais. Não há isolamento de vários clientes nesta versão.
 
 Os arquivos de atendimento `active_tickets.json` e `user_languages.json` também são ignorados pelo Git e são criados localmente quando necessários. Não envie arquivos de banco, chaves, backups, logs, cookies ou capturas de tela com dados reais ao repositório. As imagens deste README são ilustrações sem dados de clientes.
 
-O servidor escuta somente em `127.0.0.1`. Publicação comercial, múltiplos clientes e recuperação de senha por e-mail são etapas futuras. A porta pode ser alterada com `PORT`; ao personalizar a origem, configure também `DASHBOARD_URL` com a URL exata, sem barra final. `NERD_DATA_DIR` permite mudar o diretório do banco e da chave.
+Localmente, o servidor escuta em `127.0.0.1`; no Railway/produção, em `0.0.0.0` usando `PORT`. `NERD_DATA_DIR` define o diretório de todos os dados. Em produção, configure `DASHBOARD_URL` com a origem HTTPS exata. Múltiplos clientes e recuperação de senha por e-mail continuam sendo etapas futuras.
+
+## Implantar no Railway
+
+Veja o [guia de implantação](docs/railway.md) para volume persistente, variáveis, código de instalação, HTTPS e healthcheck. A aplicação bloqueia o cadastro sem código e recusa iniciar no Railway sem volume persistente.
 
 ## Organização
 
@@ -94,7 +98,7 @@ test/bot.test.js         Regressão dos fluxos sem conexões externas
 
 Para adicionar um comando, crie uma função em `src/telegram/handlers/` e registre-a em `src/telegram/index.js`. Os manipuladores usam os serviços e compartilham o estado de `src/state.js`; a persistência permanece em `storage/`.
 
-O `.env` opcional é resolvido a partir da raiz do projeto. Os arquivos `active_tickets.json` e `user_languages.json` continuam sendo lidos e gravados no diretório de execução, como na versão original. Execute os comandos na raiz para usar os dados existentes.
+O `.env` opcional é resolvido a partir da raiz do projeto. Os arquivos `active_tickets.json` e `user_languages.json` são lidos e gravados no diretório de dados configurado, cujo padrão é `data/` na raiz do projeto.
 
 ## Verificação
 
