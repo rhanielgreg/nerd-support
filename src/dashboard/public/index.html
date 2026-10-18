@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nerd Support · Central de atendimento</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="/"
+        ><span class="brand-icon">n<span>↗</span></span
+        ><span>nerd<span class="brand-light">support</span></span></a
+      >
+      <div class="workspace">
+        <span class="workspace-icon">N</span>
+        <div>
+          <strong id="workspace-name">Seu espaço de suporte</strong
+          ><small>Console de administração</small>
+        </div>
+        <span class="workspace-dot"></span>
+      </div>
+      <small class="nav-title">WORKSPACE</small>
+      <nav>
+        <button class="nav active" data-view="integrations">
+          <span>◫</span> Visão geral</button
+        ><button class="nav" data-view="tickets">
+          <span>▤</span> Tickets <small id="nav-count">0</small></button
+        ><button class="nav" data-view="history">
+          <span>◷</span> Atividade
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-badge"><span></span> Ambiente local</div>
+        <p>Boas conversas.<br />Suporte mais próximo.</p>
+        <div class="profile">
+          <span class="avatar">N</span>
+          <div>
+            <strong id="profile-name">Primeiro acesso</strong
+            ><small id="profile-email">Vamos começar</small>
+          </div>
+          <button id="logout" title="Sair" aria-label="Sair" hidden>↪</button>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <span
+          >Workspace <span class="slash">/</span>
+          <strong>Visão geral</strong></span
+        ><span class="top-label">NERD SUPPORT <span>v1.0</span></span>
+      </header>
+      <div class="content">
+        <section id="access" hidden>
+          <div class="eyebrow">UM BOM ATENDIMENTO COMEÇA AQUI</div>
+          <h1 id="access-title">Seu suporte, do seu jeito.</h1>
+          <p class="subtitle" id="access-description">
+            Crie sua conta para conectar os canais e começar a atender.
+          </p>
+          <div class="access-layout">
+            <form id="access-form" class="card access-card">
+              <div class="section-label">PRIMEIRO ACESSO</div>
+              <h2 id="form-title">Crie seu administrador</h2>
+              <p class="muted">
+                Um espaço seguro para gerenciar o seu atendimento.
+              </p>
+              <label id="name-label"
+                >Seu nome<input
+                  name="name"
+                  autocomplete="name"
+                  minlength="2"
+                  maxlength="80"
+                  required
+                  placeholder="Como podemos chamar você?" /></label
+              ><label
+                >E-mail<input
+                  name="email"
+                  type="email"
+                  autocomplete="username"
+                  required
+                  placeholder="voce@empresa.com" /></label
+              ><label
+                >Senha<input
+                  name="password"
+                  type="password"
+                  minlength="12"
+                  maxlength="128"
+                  autocomplete="new-password"
+                  required
+                  placeholder="Pelo menos 12 caracteres" /></label
+              ><button class="primary full" id="access-submit">
+                Criar minha conta <span>↗</span></button
+              ><small class="muted"
+                >Os dados ficam nesta instalação do Nerd Support.</small
+              >
+            </form>
+            <div class="onboarding-note">
+              <span class="large-symbol">↗</span>
+              <h2>Um lugar para conectar<br />todas as conversas.</h2>
+              <p>
+                Seu cliente fala pelo Telegram.<br />Sua equipe resolve pelo
+                Discord.<br />Você gerencia tudo por aqui.
+              </p>
+              <div class="step"><b>01</b><span>Crie seu acesso</span></div>
+              <div class="step"><b>02</b><span>Conecte seus bots</span></div>
+              <div class="step">
+                <b>03</b><span>Abra seu primeiro ticket</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="dashboard" hidden>
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow">CENTRAL DE ATENDIMENTO</div>
+              <h1>Seu suporte sob controle<span class="orange">.</span></h1>
+              <p class="subtitle">
+                Conecte seus canais e deixe as conversas fluírem.
+              </p>
+            </div>
+            <span class="status-pill" id="status-pill">● Desconectado</span>
+          </div>
+          <div class="metrics">
+            <article class="metric">
+              <span>Tickets abertos <span>▤</span></span
+              ><strong id="ticket-count">0</strong
+              ><small>Conversas em atendimento</small>
+            </article>
+            <article class="metric">
+              <span>Telegram <span>↗</span></span
+              ><strong class="metric-label" id="telegram-state"
+                >Não configurado</strong
+              ><small id="telegram-name">Seu canal com o cliente</small>
+            </article>
+            <article class="metric">
+              <span>Discord <span>◈</span></span
+              ><strong class="metric-label" id="discord-state"
+                >Não configurado</strong
+              ><small id="discord-name">O espaço da sua equipe</small>
+            </article>
+          </div>
+          <div id="integrations-view">
+            <form id="settings-form">
+              <div class="settings-grid">
+                <div>
+                  <section class="card">
+                    <div class="card-heading">
+                      <span class="section-icon">✳</span>
+                      <div>
+                        <h2>Identidade do atendimento</h2>
+                        <p>Dê a sua cara à conversa.</p>
+                      </div>
+                      <span class="section-number">01</span>
+                    </div>
+                    <div class="form-body two-columns">
+                      <label
+                        >Nome da empresa<input
+                          name="companyName"
+                          maxlength="100"
+                          placeholder="Ex.: Minha empresa" /></label
+                      ><label
+                        >Nome exibido no atendimento<input
+                          name="botName"
+                          maxlength="80"
+                          required
+                          value="Nerd Support"
+                        /><small
+                          >Usado nas mensagens. Não altera o @ do bot.</small
+                        ></label
+                      >
+                    </div>
+                  </section>
+                  <section class="card">
+                    <div class="card-heading">
+                      <span class="section-icon telegram-icon">↗</span>
+                      <div>
+                        <h2>Telegram</h2>
+                        <p>Onde seus clientes abrem os tickets.</p>
+                      </div>
+                      <span class="connection-label" id="tg-badge"
+                        >Não configurado</span
+                      >
+                    </div>
+                    <div class="form-body">
+                      <label
+                        >Token do bot<input
+                          name="telegramToken"
+                          type="password"
+                          autocomplete="new-password"
+                          placeholder="Cole o token recebido do BotFather"
+                        /><small id="tg-secret-hint"
+                          >Crie seu bot com o @BotFather no Telegram.</small
+                        ></label
+                      >
+                    </div>
+                  </section>
+                  <section class="card">
+                    <div class="card-heading">
+                      <span class="section-icon discord-icon">◈</span>
+                      <div>
+                        <h2>Discord</h2>
+                        <p>Onde sua equipe faz o atendimento.</p>
+                      </div>
+                      <span class="connection-label" id="dc-badge"
+                        >Não configurado</span
+                      >
+                    </div>
+                    <div class="form-body">
+                      <label
+                        >Token do bot<input
+                          name="discordToken"
+                          type="password"
+                          autocomplete="new-password"
+                          placeholder="Cole o token do Discord Developer Portal"
+                        /><small id="dc-secret-hint"
+                          >Ative o Message Content Intent no portal do
+                          Discord.</small
+                        ></label
+                      >
+                      <div class="two-columns">
+                        <label
+                          >ID do servidor<input
+                            name="guildId"
+                            inputmode="numeric"
+                            placeholder="ID do seu servidor" /></label
+                        ><label
+                          >ID do cargo de moderador<input
+                            name="modRoleId"
+                            inputmode="numeric"
+                            placeholder="Opcional" /></label
+                        ><label
+                          >Categoria de tickets<input
+                            name="categoryId"
+                            inputmode="numeric"
+                            placeholder="ID da categoria · opcional" /></label
+                        ><label
+                          >Categoria de arquivados<input
+                            name="archiveCategoryId"
+                            inputmode="numeric"
+                            placeholder="ID da categoria · opcional"
+                        /></label>
+                      </div>
+                      <label
+                        >Canal de fallback<input
+                          name="channelId"
+                          inputmode="numeric"
+                          placeholder="Canal usado como alternativa · opcional" /></label
+                      ><small class="muted"
+                        >Ative o modo desenvolvedor no Discord para copiar os
+                        IDs.</small
+                      >
+                    </div>
+                  </section>
+                  <div class="savebar">
+                    <span id="save-hint">Salve antes de conectar os bots.</span
+                    ><button class="primary" type="submit" id="save-button">
+                      Salvar configurações <span>↗</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="right-column">
+                  <section class="card connection-card">
+                    <div class="section-label">PRONTO PARA CONECTAR?</div>
+                    <h2>Dois canais.<br />Uma conversa.</h2>
+                    <div class="channel-diagram">
+                      <span>↗<small>Telegram</small></span
+                      ><i>······</i><b>n</b><i>······</i
+                      ><span>◈<small>Discord</small></span>
+                    </div>
+                    <p>
+                      Valide os dados e inicie o atendimento quando estiver tudo
+                      certo.
+                    </p>
+                    <button class="secondary full" type="button" id="verify">
+                      Validar integrações</button
+                    ><button class="primary full" type="button" id="start">
+                      Conectar bots <span>↗</span></button
+                    ><button class="danger full" type="button" id="stop" hidden>
+                      Parar atendimento
+                    </button>
+                    <p id="runtime-error" class="error-text" role="status"></p>
+                    <small class="muted"
+                      >Ao reiniciar o painel, conecte os bots novamente.</small
+                    >
+                  </section>
+                  <section class="card guide-card">
+                    <span class="section-label">SEU PRIMEIRO TESTE</span>
+                    <h3>Vamos abrir uma conversa?</h3>
+                    <ol>
+                      <li>Salve e conecte as integrações.</li>
+                      <li>
+                        No Telegram, envie <code>/start</code> e
+                        <code>/novoticket</code> ao seu bot.
+                      </li>
+                      <li>Preencha o assunto e a descrição.</li>
+                      <li>Responda pelo canal criado no Discord.</li>
+                    </ol>
+                    <div class="test-box">
+                      <label
+                        >Teste de envio ao Telegram<input
+                          id="test-user-id"
+                          inputmode="numeric"
+                          placeholder="Seu ID numérico do Telegram" /></label
+                      ><button
+                        type="button"
+                        class="secondary full"
+                        id="test-message"
+                      >
+                        Enviar mensagem de teste</button
+                      ><small class="muted"
+                        >Envie /start ao bot antes de testar.</small
+                      >
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </form>
+          </div>
+          <section id="tickets-view" class="card list-card" hidden>
+            <h2>Tickets em atendimento</h2>
+            <p class="muted">
+              As conversas abertas aparecem aqui automaticamente.
+            </p>
+            <div id="tickets-list"></div>
+          </section>
+          <section id="history-view" class="card list-card" hidden>
+            <h2>Atividade do workspace</h2>
+            <p class="muted">Alterações e ações realizadas no painel.</p>
+            <div id="history-list"></div>
+          </section>
+        </section>
+        <footer>
+          <span>nerdsupport</span><span>Feito para aproximar pessoas.</span>
+        </footer>
+      </div>
+    </main>
+    <div id="toast" role="status" hidden></div>
+  </body>
+</html>

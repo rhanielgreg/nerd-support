@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Nerd Support</title>
+  <desc id="desc">Atendimento no Telegram. Sua equipe no Discord. Tudo sob controle.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#171d27"/><stop offset="1" stop-color="#272e3b"/></linearGradient>
+    <linearGradient id="orange" x2="1" y2="1"><stop stop-color="#ffab65"/><stop offset="1" stop-color="#ea6a32"/></linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#ffffff" stroke-opacity=".035"/></pattern>
+  </defs>
+  <rect width="1280" height="420" rx="24" fill="url(#bg)"/>
+  <rect width="1280" height="420" rx="24" fill="url(#grid)"/>
+  <circle cx="1130" cy="30" r="225" fill="#ea6a32" opacity=".06"/>
+  <circle cx="1175" cy="80" r="165" fill="none" stroke="#ea6a32" stroke-opacity=".12"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="64" y="56" width="58" height="58" rx="17" fill="url(#orange)"/>
+    <text x="78" y="98" fill="white" font-size="47" font-weight="700">n</text>
+    <path d="M102 78l10-10m-8 0h8v8" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="138" y="94" font-size="27" fill="#fff" font-weight="700">nerd<tspan font-weight="300" fill="#c7cdd6">support</tspan></text>
+    <text x="66" y="163" font-size="11" font-weight="600" letter-spacing="3" fill="#ecab88">CONVERSAS QUE CONECTAM</text>
+    <text x="61" y="224" font-size="52" font-weight="700" letter-spacing="-2" fill="#fff">Seu suporte,</text>
+    <text x="61" y="280" font-size="52" font-weight="700" letter-spacing="-2" fill="#fff">do seu jeito<tspan fill="#f1834c">.</tspan></text>
+    <text x="65" y="323" font-size="17" fill="#aab4c4">Atendimento no Telegram. Sua equipe no Discord.</text>
+    <text x="65" y="349" font-size="17" fill="#aab4c4">Tudo sob controle em um só painel.</text>
+    <g transform="translate(730 66)">
+      <rect width="480" height="292" rx="15" fill="#111720" stroke="#414957"/>
+      <path d="M0 16Q0 0 16 0H464Q480 0 480 16V39H0Z" fill="#303846"/>
+      <circle cx="20" cy="20" r="4" fill="#ec8e70"/><circle cx="35" cy="20" r="4" fill="#e2bd7b"/><circle cx="50" cy="20" r="4" fill="#8ab99b"/>
+      <text x="367" y="24" font-size="9" fill="#a5afbe">WORKSPACE</text>
+      <text x="25" y="77" font-size="17" font-weight="600" fill="#fff">Atendimento conectado</text>
+      <circle cx="446" cy="70" r="5" fill="#8ab99b"/>
+      <rect x="24" y="95" width="432" height="68" rx="8" fill="#222b38"/>
+      <rect x="39" y="111" width="35" height="35" rx="9" fill="#2a465a"/>
+      <path d="M46 126l22-9-6 22-7-8-9-5zm9 5 9-10" fill="#7cc5ee" stroke="#7cc5ee" stroke-width="1.2"/>
+      <text x="88" y="121" font-size="11" fill="#f2f4f7" font-weight="600">Telegram</text>
+      <text x="88" y="141" font-size="10" fill="#9ca9ba">Seu cliente abre uma conversa</text>
+      <circle cx="433" cy="128" r="4" fill="#8ab99b"/>
+      <path d="M240 170v14" stroke="#657186" stroke-dasharray="3 3"/>
+      <rect x="24" y="190" width="432" height="68" rx="8" fill="#222b38"/>
+      <rect x="39" y="206" width="35" height="35" rx="9" fill="#363952"/>
+      <path d="M49 217h15l4 14H45Z" fill="#a5a8f2"/><circle cx="52" cy="225" r="2" fill="#363952"/><circle cx="61" cy="225" r="2" fill="#363952"/>
+      <text x="88" y="216" font-size="11" fill="#f2f4f7" font-weight="600">Discord</text>
+      <text x="88" y="236" font-size="10" fill="#9ca9ba">Sua equipe recebe e resolve o ticket</text>
+      <circle cx="433" cy="223" r="4" fill="#8ab99b"/>
+    </g>
+    <text x="1209" y="391" text-anchor="end" font-size="9" fill="#748195" letter-spacing="2">TELEGRAM + DISCORD + DASHBOARD</text>
+  </g>
+</svg>

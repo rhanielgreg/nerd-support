@@ -10,6 +10,8 @@ yarn-error.log
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
 
 # Logs
 logs
@@ -32,4 +34,19 @@ build/
 # Outros
 .cache/
 coverage/
-.nyc_output/ 
+.nyc_output/
+data/
+
+# Dados de clientes e credenciais locais
+active_tickets.json
+user_languages.json
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.key
+*.pem
+*.p12
+*.pfx
+*.bak
+backups/

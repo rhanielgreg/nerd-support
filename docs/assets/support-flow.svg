@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="166" viewBox="0 0 1280 166" role="img" aria-labelledby="title desc">
+  <title id="title">Como o Nerd Support conecta o atendimento</title>
+  <desc id="desc">Cliente no Telegram, Nerd Support e equipe no Discord, com mensagens e imagens nas duas direções.</desc>
+  <rect x="1" y="1" width="1278" height="164" rx="20" fill="#f7f8fa" stroke="#e5e8ed"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="37" y="38" width="295" height="90" rx="14" fill="#fff" stroke="#dde7f0"/>
+    <rect x="58" y="58" width="48" height="48" rx="13" fill="#e7f3fc"/>
+    <path d="M68 80l27-11-7 26-9-9-11-6zm11 6 12-12" fill="#439cd0"/>
+    <text x="121" y="77" font-size="17" font-weight="650" fill="#243041">Telegram</text>
+    <text x="121" y="100" font-size="12" fill="#818b99">Cliente abre e acompanha o ticket</text>
+    <path d="M357 83H443m-8-7 8 7-8 7m-70-14-8 7 8 7" stroke="#b9c2cf" stroke-width="2" fill="none"/>
+    <rect x="467" y="38" width="346" height="90" rx="14" fill="#202937"/>
+    <rect x="489" y="58" width="48" height="48" rx="13" fill="#ea6a32"/>
+    <text x="500" y="94" font-size="39" font-weight="700" fill="#fff">n</text>
+    <text x="554" y="77" font-size="17" font-weight="650" fill="#fff">Nerd Support</text>
+    <text x="554" y="100" font-size="12" fill="#aeb9c9">Conexões e configurações no painel</text>
+    <path d="M837 83H923m-8-7 8 7-8 7m-70-14-8 7 8 7" stroke="#b9c2cf" stroke-width="2" fill="none"/>
+    <rect x="947" y="38" width="295" height="90" rx="14" fill="#fff" stroke="#e1e0f1"/>
+    <rect x="967" y="58" width="48" height="48" rx="13" fill="#efeffc"/>
+    <path d="M980 72h22l6 23h-34Z" fill="#7b7ed2"/><circle cx="984" cy="84" r="3" fill="#fff"/><circle cx="997" cy="84" r="3" fill="#fff"/>
+    <text x="1030" y="77" font-size="17" font-weight="650" fill="#243041">Discord</text>
+    <text x="1030" y="100" font-size="12" fill="#818b99">Equipe responde e encerra o ticket</text>
+  </g>
+</svg>

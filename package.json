@@ -1,17 +1,19 @@
 {
-  "name": "orc-support",
+  "name": "nerd-support",
   "version": "1.0.0",
   "description": "Bot de Suporte Telegram-Discord",
   "main": "complete-bot.js",
   "type": "module",
   "scripts": {
     "start": "node complete-bot.js",
-    "dev": "nodemon complete-bot.js"
+    "dev": "nodemon complete-bot.js",
+    "test": "node --test"
   },
   "author": "Memeboom",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.2",
+    "better-auth": "^1.7.10",
     "discord.js": "^14.18.0",
     "dotenv": "^16.3.1",
     "express": "^4.21.2",
@@ -20,5 +22,19 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src",
+      "complete-bot.js"
+    ],
+    "ext": "js,html,css",
+    "ignore": [
+      "data/**",
+      ".cache/**"
+    ]
   }
 }
